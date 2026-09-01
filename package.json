@@ -1,0 +1,13 @@
+{
+  "name": "game-interface-website",
+  "version": "1.0.0",
+  "description": "Simple local game with optional Socket.IO multiplayer hooks",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
