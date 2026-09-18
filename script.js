@@ -1,74 +1,64 @@
-let userScore = 0;
-let computerScore = 0;
+const BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
 
 
-const choices = document.querySelectorAll(".choice");
+const dropdowns = document.querySelectorAll(".dropdown select");
+const btn = document.querySelector("form button");
+const fromcurr = document.querySelector(".from select");
+const tocurr = document.querySelector(".to select");
+const msg = document.querySelector(".msg p");
 
-const msg = document.querySelector("#msg");
-
-const userScorePara = document.querySelector("#user-score");
-const computerScorePara = document.querySelector("#comp-score");
-const playAgainButton = document.querySelector("#play-again");
-
-
-
-
-const generateComputerChoice = () => {
-    const options = ["rock", "paper", "scissors"];
-    const randIdx = Math.floor(Math.random() * options.length);
-    return options[randIdx];
-};
-
-const drawGame = () => {
-    msg.textContent = "It's a draw. Play again.";
-    msg.style.backgroundColor = "#2563eb";
-};
-
-const resetGame = () => {
-    userScore = 0;
-    computerScore = 0;
-    userScorePara.textContent = userScore;
-    computerScorePara.textContent = computerScore;
-    msg.textContent = "Choose your move";
-    msg.style.backgroundColor = "#081b31";
-};
-
-const showWinner = (userWin, userChoice, computerChoice) => {
-    if (userWin) {
-        userScore++;
-        userScorePara.textContent = userScore;
-        msg.textContent = `You win! ${userChoice} beats ${computerChoice}.`;
-        msg.style.backgroundColor = "#15803d";
-    } else {
-        computerScore++;
-        computerScorePara.textContent = computerScore;
-        msg.textContent = `You lose! ${computerChoice} beats ${userChoice}.`;
-        msg.style.backgroundColor = "#dc2626";
+for (const select of dropdowns) {
+    for (currcode in countryList) {
+        let newoption = document.createElement("option");
+        newoption.value = currcode;
+        newoption.innerText = currcode;
+        if (select.name === "form" && currcode === "USD") {
+            newoption.selected = "selected";
+        }
+        else if (select.name === "to" && currcode === "INR") {
+            newoption.selected = "selected";
+        }
+        select.append(newoption);
     }
-};
-const playGame = (userChoice) => {
-    const computerChoice = generateComputerChoice();
-
-    if (userChoice === computerChoice) {
-        drawGame();
-        return;
-    }
-
-    const userWin =
-        (userChoice === "rock" && computerChoice === "scissors") ||
-        (userChoice === "paper" && computerChoice === "rock") ||
-        (userChoice === "scissors" && computerChoice === "paper");
-
-    showWinner(userWin, userChoice, computerChoice);
-
-};
-
-choices.forEach((choice) => {
-    choice.addEventListener("click", () =>{
-        playGame(choice.id);
-
+    select.addEventListener("change", (evt) => {
+        updateflag(evt.target);
     });
 
+}
+
+
+const updateflag = (element) => {
+    let currcode = element.value;
+    let countrycode = countryList[currcode];
+    let newsrc = `https://flagsapi.com/${countrycode}/flat/64.png`;
+    let img = element.parentElement.querySelector("img");
+    img.src = newsrc;
+};
+
+btn.addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    let amount = document.querySelector(".amount input");
+    let amtval = amount.value;
+    if (amtval === "" || amtval < 1) {
+        amtval = 1;
+        amount.value = "1";
+    }
+
+    const URL = `${BASE_URL}/${fromcurr.value.toLowerCase()}.json`;
+    try {
+        let response = await fetch(URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        let data = await response.json();
+        let rate = data[fromcurr.value.toLowerCase()][tocurr.value.toLowerCase()];
+        let finalAmount = amtval * rate;
+        msg.innerText = `${amtval} ${fromcurr.value} = ${finalAmount.toFixed(2)} ${tocurr.value}`;
+    } catch (error) {
+        console.error("Error fetching exchange rate:", error);
+        msg.innerText = "Failed to fetch exchange rate. Please try again later.";
+    }
 });
 
-playAgainButton.addEventListener("click", resetGame);
+
+

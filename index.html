@@ -1,55 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rock Paper Scissors Game</title>
-<link rel="stylesheet" href="pro.css">
+  <meta charset="UTF-8">
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- icon ke liye -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-<main class="game">
-<h1>Rock Paper Scissors</h1>
+  <div class="container">
+    <h2>Currency Converter</h2>
 
-<div class="choices">
-    <button class="choice" id="rock" type="button" aria-label="Choose rock">
-        <img src="rock.svg" alt="Rock">
-        <span>Rock</span>
-    </button>
+    <form>
 
-    <button class="choice" id="paper" type="button" aria-label="Choose paper">
-        <img src="paper.svg" alt="Paper">
-        <span>Paper</span>
-    </button>
+      <div class="amount">
+        <p>Enter Amount</p>
+        <input type="text" value="1">
+      </div>
 
-    <button class="choice" id="scissors" type="button" aria-label="Choose scissors">
-        <img src="scissors.svg" alt="Scissors">
-        <span>Scissors</span>
-    </button>
-</div>
+      <div class="dropdown">
 
-<div class="score-board">
+        <!-- FROM -->
+        <div class="from">
+          <p>From</p>
+          <div class="select-container">
+            <img src= "https://flagcdn.com/48x36/us.png">
+            <select name="form">
+              <option value="USD">USD</option>
+              <option value="INR">INR</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+            
+           
+          </div>
+        </div>
 
-    <div class="score">
-        <p id="user-score">0</p>
-        <p>You</p>
-    </div>
+        <!-- ICON -->
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
-    <div class="score">
-        <p id="comp-score">0</p>
-        <p>Comp</p>
-    </div>
+        <!-- TO -->
+        <div class="to">
+          <p>To</p>
+          <div class="select-container">
+            <img src="https://flagcdn.com/48x36/in.png">
+            <select name="to">
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+          </div>
+        </div>
 
-</div>
+      </div>
+      <div class="msg">
+        <p>1 USD = 80 INR</p>
+      </div>
+      <button>get exchange rate</button>
+    </form>
 
-<div class="msg-container">
-    <p id="msg" role="status" aria-live="polite">Play your move</p>
-    <button id="play-again" class="play-again" type="button">Play Again</button>
-</div>
-</main>
-
+  <script src="countryList.js"></script>
 <script src="script.js"></script>
+  
 
 </body>
 </html>
