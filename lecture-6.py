@@ -74,7 +74,7 @@ def fact (n):
     if(n==1 or n==0):
         return 1
     return fact(n-1)*n
-print(fact(5))"""
+print(fact(5))
 #q=1 recursive function
 herose=["thor", "shaktimaan", "hero" , "captain amerkica"]
 def calc_sum(n):
@@ -83,6 +83,7 @@ def calc_sum(n):
     return calc_sum(n - 1) + n
 
 
-sum_result = calc_sum(5)
-print(sum_result)
+sum = calc_sum(5)
+print(sum)
 
+"""
